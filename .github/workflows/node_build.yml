@@ -16,7 +16,7 @@ jobs:
       with:
         node-version: 18
     - working-directory: ./client
-      run: npm lint
+      run: npm run lint
     - working-directory: ./client
       run: npm ci
     - working-directory: ./client

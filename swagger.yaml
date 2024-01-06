@@ -33,29 +33,27 @@ paths:
             type: array
             items:
               type: string
-          description: The list of desks the endpoint should return. If empty, all desks are returned
+          description: The list of desks the endpoint should return. If empty, all desks are returned.
+          required: false
         - in: query
-          name: interval
+          name: count
           schema:
-            type: object
-            properties:
-              count: 
-                type: integer
-              unit:
-                type: string
-                enum:
-                - days
-                - weeks
-                - months
-                - years
-          example:
-            {
-            "count": 10,
-            "unit": "days"
-            }
-          style: form
-          explode: true
-          description: Time interval of data to be returned.
+            type: integer
+          required: false
+          example: 10
+          description: Number of units defining interval from which data should be returned.
+        - in: query
+          name: unit
+          schema:
+            type: string
+            enum:
+              - days
+              - weeks
+              - months
+              - years
+          required: false
+          example: "days"
+          description: Time unit of interval from which data should be returned.
 
       responses:
           '200':

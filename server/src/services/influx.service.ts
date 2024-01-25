@@ -71,14 +71,14 @@ export async function getStats(
       )}, fn: mean, createEmpty: false)
       |> yield(name: "mean")`;
 
-  console.log(fluxQuery);
+  // console.log(fluxQuery);
 
   return queryInflux(fluxQuery);
 }
 
 export async function getLatestDataPoint(
   zoneId: string,
-  deskId?: string,
+  deskId: string,
   count: number = 10,
   unit: "day" | "week" | "month" | "year" = "day",
 ): Promise<DataPoint[]> {
@@ -90,14 +90,14 @@ export async function getLatestDataPoint(
       |> filter(fn: (r) => r["deskId"] == "${deskId}")
       |> last()`;
 
-  console.log(fluxQuery);
+  // console.log(fluxQuery);
 
   return queryInflux(fluxQuery);
 }
 
 export async function getLatestActiveDataPoint(
   zoneId: string,
-  deskId?: string,
+  deskId: string,
   count: number = 10,
   unit: "day" | "week" | "month" | "year" = "day",
 ): Promise<DataPoint[]> {
@@ -110,7 +110,7 @@ export async function getLatestActiveDataPoint(
       |> filter(fn: (r) => r["_value"] > 300)
       |> last()`;
 
-  console.log(fluxQuery);
+  // console.log(fluxQuery);
 
   return queryInflux(fluxQuery);
 }

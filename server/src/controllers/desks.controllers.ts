@@ -2,7 +2,7 @@ import { RequestHandler } from "express";
 import {
   createDesksService,
   deleteDesksService,
-  getDesksServiceReal,
+  getDesksService,
 } from "../services/desks.service";
 import { apiKey } from "../main";
 
@@ -13,7 +13,13 @@ type GetRequestParams = {
   unit?: "day" | "week" | "month" | "year";
 };
 
-type PostDeleteRequestParams = {
+type PostRequestParams = {
+  zoneId: string;
+  deskId: string;
+  zoneName: string;
+};
+
+type DeleteRequestParams = {
   zoneId: string;
   deskId: string;
 };
@@ -27,12 +33,12 @@ export const getDesks: RequestHandler = async (req, res, next) => {
     return;
   }
 
-  const data = await getDesksServiceReal(request);
+  const data = await getDesksService(request);
   res.status(200).json({ data });
 };
 
 export const createDesk: RequestHandler = async (req, res, next) => {
-  const request = req.body as unknown as PostDeleteRequestParams;
+  const request = req.body as unknown as PostRequestParams;
 
   const reqApiKey = req.header("api-key");
   if (reqApiKey !== apiKey) {
@@ -55,7 +61,7 @@ export const createDesk: RequestHandler = async (req, res, next) => {
 };
 
 export const deleteDesk: RequestHandler = async (req, res, next) => {
-  const request = req.query as unknown as PostDeleteRequestParams;
+  const request = req.query as unknown as DeleteRequestParams;
 
   const reqApiKey = req.header("api-key");
   if (reqApiKey !== apiKey) {
@@ -65,7 +71,7 @@ export const deleteDesk: RequestHandler = async (req, res, next) => {
 
   const data = await deleteDesksService(request);
   if (data == null) {
-    res.status(404).json({ message: "This desk doesn not exist in this zone" });
+    res.status(404).json({ message: "This desk doesn't not exist in this zone" });
     return;
   }
   if (data == 200) {

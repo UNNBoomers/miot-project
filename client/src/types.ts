@@ -1,15 +1,18 @@
 type Zone = {
-  id: number;
+  id: string;
   name: string;
 };
 
-type Table = {
-  id: number;
-  zoneId: number;
-  name: string;
-  isOccupied: boolean;
-  lastOccupiedAt?: Date;
+type Desk = {
+  id: string;
+  zoneId: string;
+  status: DeskStatus;
+  lastUsed: Date;
+  averageWorkHoursUsage: number;
+  averageDailyUsage: number;
+  shortUsagesCount: number;
 };
 
+export type DeskStatus = 'active' | 'inactive' | 'offline';
 
-export type { Zone, Table };
+export type { Zone, Desk };

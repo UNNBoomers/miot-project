@@ -1,6 +1,5 @@
 import { RequestHandler } from "express";
 import { apiKey } from "../main";
-import { getZonesService } from "../services/zones.service";
 
 export const getDefault: RequestHandler = async (req, res, next) => {
   const reqApiKey = req.header("api-key");
@@ -8,5 +7,5 @@ export const getDefault: RequestHandler = async (req, res, next) => {
     res.status(401).json({ message: "Unauthorized" });
     return;
   }
-  res.status(200);
+  res.status(200).json({ data: "success" });
 };

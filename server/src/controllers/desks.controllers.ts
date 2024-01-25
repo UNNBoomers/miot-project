@@ -77,7 +77,9 @@ export const deleteDesk: RequestHandler = async (req, res, next) => {
 
   const data = await deleteDesksService(request);
   if (data == null) {
-    res.status(404).json({ message: "This desk doesn't not exist in this zone" });
+    res
+      .status(404)
+      .json({ message: "This desk doesn't not exist in this zone" });
     return;
   }
   if (data == 200) {

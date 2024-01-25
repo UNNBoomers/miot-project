@@ -28,7 +28,7 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use(bodyParser.json());
 
-app.use("/", defaultRoute);
+app.use("/default", defaultRoute);
 app.use("/desks", deskRoutes);
 app.use("/zones", zonesRoute);
 

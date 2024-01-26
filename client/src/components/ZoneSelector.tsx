@@ -4,7 +4,7 @@ import { Zone } from '../types.ts';
 type ZoneSelectorProps = {
 
   zones: Zone[];
-  onSelectZone: (zoneId: number) => void;
+  onSelectZone: (zoneId: Zone) => void;
 };
 
 export const ZoneSelector: React.FC<ZoneSelectorProps> = ({ zones, onSelectZone }) => {
@@ -14,7 +14,7 @@ export const ZoneSelector: React.FC<ZoneSelectorProps> = ({ zones, onSelectZone 
         <button
           key={zone.id}
           className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
-          onClick={() => onSelectZone(zone.id)}
+          onClick={() => onSelectZone(zone)}
         >
           {zone.name}
         </button>

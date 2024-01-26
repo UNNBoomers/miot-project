@@ -1,8 +1,8 @@
 import React from 'react';
-import { Table } from '../types';
+import { Desk } from '../types';
 
 type TablesDisplayProps = {
-  tables: Table[];
+  tables: Desk[];
 };
 
 const TablesDisplay: React.FC<TablesDisplayProps> = ({ tables }) => {
@@ -13,10 +13,11 @@ const TablesDisplay: React.FC<TablesDisplayProps> = ({ tables }) => {
           {tables.map(table => (
             <div
               key={table.id}
-              className={`p-4 border rounded ${table.isOccupied ? 'bg-red-200' : 'bg-green-200'}`}
+              className={`p-4 border rounded ${table.status === 'offline' ? 'bg-red-200' : table.status === 'inactive' ? 'bg-grey-200' : 'bg-green-200'}`}
             >
-              {table.name}
-              {table.isOccupied && <p>Last occupied at: {table.lastOccupiedAt?.toLocaleString()}</p>}
+              {table.id}
+              <p>Status: {table.status}</p>
+              {table.lastUsed && <p>Last used: {table.lastUsed?.toLocaleString()}</p>}
             </div>
           ))}
         </div>

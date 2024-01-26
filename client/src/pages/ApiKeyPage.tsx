@@ -1,12 +1,39 @@
- import { useState }  from 'react';
+import { useState } from 'react';
 
-const ApiKeyPage = () => {
+type ApiKeyPageProps = {
+  onApiKeyChange: (newKey: string) => void;
+
+}
+const ApiKeyPage = ({ onApiKeyChange }: ApiKeyPageProps) => {
   const [apiKey, setApiKey] = useState('');
 
-  const handleSubmit = (e: any) => {
+  const setCookie = (name: string, value: string, minutes: number) => {
+    const now = new Date();
+    now.setTime(now.getTime() + minutes * 60 * 1000);
+    const expires = 'expires=' + now.toUTCString();
+    document.cookie = `${name}=${value};${expires};path=/`;
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Handle the API key submission logic here
-    console.log('API Key submitted:', apiKey);
+    try {
+      const response = await fetch('http://localhost:3000/default', {
+        method: 'GET',
+        headers: {
+          'Api-Key': apiKey,
+        },
+      });
+
+      if (response.status === 200) {
+        setCookie('apiStatus', apiKey, 30);
+        onApiKeyChange(apiKey);
+        console.log('API Key valid and saved in cookie');
+      } else {
+        console.log('API Key invalid');
+      }
+    } catch (error) {
+      console.error('Error during API call', error);
+    }
   };
 
   return (

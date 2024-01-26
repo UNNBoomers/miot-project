@@ -1,17 +1,19 @@
 import useSWR from 'swr';
 import { Desk } from '../types.ts';
 import { baseUrl, createFetcher } from './fetcher.ts';
+import { getCookie } from '../utils/cookie.ts';
 
 
 const useDesks = (zoneIds: string[]) => {
   const idsParam = zoneIds.join(',');
   console.log(idsParam);
   const url = `${baseUrl}/desks?zoneId=${encodeURIComponent(idsParam)}`;
+  const apiKeyInCookie = getCookie('apiStatus'); // Assuming 'apiStatus' is the name of your cookie
 
   const {
-    data:responseData,
+    data: responseData,
     error,
-  } = useSWR<{data:Desk[]}>([url], createFetcher('fake-building-123.55d6908f-843f-48ed-aa37-bdb5983fe612'));
+  } = useSWR<{ data: Desk[] }>([url], createFetcher(apiKeyInCookie ?? ''));
 
   const desks = responseData ? responseData.data : [];
   return {

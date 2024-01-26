@@ -18,9 +18,9 @@ info:
     name: Apache 2.0
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 0.1.0
-  
+
 security:
-  - api_key: []
+  - api_key: [ ]
 
 paths:
   /desks:
@@ -67,23 +67,23 @@ paths:
           example: "day"
           description: Time unit of interval from which data should be returned. If null, default value of `day` is used.
       responses:
-          '200':
-            description: List of all desks in the office.
-            content:
-              application/json:
-                schema:
-                  type: array
-                  items:
-                    $ref: '#/components/schemas/Desk'
-          '404':
-            description: The selected zone doesn't exist.
-          '401':
-            description: Unauthorized.
-          '400':
-            description: Bad request. Check if the provided desk ids, interval count and unit are valid.
-          '500':
-            description: Server error.
-                    
+        '200':
+          description: List of all desks in the office.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Desk'
+        '404':
+          description: The selected zone doesn't exist.
+        '401':
+          description: Unauthorized.
+        '400':
+          description: Bad request. Check if the provided desk ids, interval count and unit are valid.
+        '500':
+          description: Server error.
+
     post:
       tags:
         - Desks
@@ -103,10 +103,10 @@ paths:
         '401':
           description: Unauthorized.
         '404':
-            description: The selected zone doesn't exist.
+          description: The selected zone doesn't exist.
         '500':
-            description: Server error.
-      
+          description: Server error.
+
     delete:
       tags:
         - Desks
@@ -134,10 +134,45 @@ paths:
         '401':
           description: Unauthorized.
         '404':
-            description: The selected zone doesn't exist or the selected desk doesn't exist within selected zone.
+          description: The selected zone doesn't exist or the selected desk doesn't exist within selected zone.
         '500':
-            description: Server error.
-      
+          description: Server error.
+
+  /zones:
+    get:
+      tags:
+        - Zones
+      summary: Get list of zones.
+      description: Retrieve a list of all zones.
+      operationId: getZones
+      responses:
+        '200':
+          description: List of all zones in the office.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Zone'
+        '401':
+          description: Unauthorized.
+        '500':
+          description: Server error.
+  /default:
+    get:
+      tags:
+        - Default
+      summary: Default endpoint for API key validation.
+      description: Default endpoint for API key validation.
+      operationId: getDefault
+      responses:
+        '200':
+          description: OK.
+        '401':
+          description: Unauthorized.
+        '500':
+          description: Server error.
+
 components:
   schemas:
     Desk:
@@ -179,6 +214,17 @@ components:
           format: int32
           description: Number of short term (under 15 minutes) usages of the desk during the selected interval.
           example: 17
+    Zone:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Unique id of the zone.
+          example: "c74caac5-ff7e-4019-8cea-54ad82423776"
+        name:
+          type: string
+          description: Name of the zone.
+          example: "Zone A"
     CreateDeskRequest:
       type: object
       properties:
@@ -190,7 +236,11 @@ components:
           type: string
           description: Unique id of zone containing the desk.
           example: "floor-1"
-          
+        zoneName:
+          type: string
+          description: Display name of zone containing the desk.
+          example: "Floor 1"
+
   securitySchemes:
     api_key:
       type: apiKey

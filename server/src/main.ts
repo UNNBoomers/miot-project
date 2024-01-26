@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import "dotenv/config";
 import { Server } from "ws";
 import cron from "node-cron";
-import cors from "cors";
 
 import deskRoutes from "./routes/desks.route";
 import { generateApiKey } from "generate-api-key";
@@ -11,6 +10,8 @@ import { generateApiKey } from "generate-api-key";
 import bodyParser from "body-parser";
 import { saveDataPoint } from "./services/influx.service";
 import { notifyDeskChanges } from "./services/notification.service";
+import zonesRoute from "./routes/zones.route";
+import defaultRoute from "./routes/default.route";
 
 dotenv.config();
 
@@ -25,9 +26,11 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Express + TypeScript Server");
 });
 
-app.use(cors())
 app.use(bodyParser.json());
+
+app.use("/default", defaultRoute);
 app.use("/desks", deskRoutes);
+app.use("/zones", zonesRoute);
 
 const server = app.listen(port, async () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);

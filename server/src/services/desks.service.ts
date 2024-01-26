@@ -19,6 +19,7 @@ type GetDesksServiceParams = {
 export type ManageDeskServiceParams = {
   zoneId: string;
   deskId: string;
+  zoneName: string;
 };
 
 export async function getDesksService({
@@ -52,7 +53,8 @@ export async function getDesksService({
 export async function createDesksService({
   zoneId,
   deskId,
-}: ManageDeskServiceParams): Promise<number> {
+  zoneName,
+}): Promise<number> {
   console.log("Creating desk");
 
   const exists = await doesDeskAlreadyExist(zoneId, deskId);
@@ -62,7 +64,7 @@ export async function createDesksService({
 
   fs.appendFile(
     "../server/src/persistence/desks.csv",
-    `\n${deskId}, ${zoneId}`,
+    `\n${deskId},${zoneId},${zoneName}`,
     function (err) {
       if (err) throw err;
     },
@@ -71,15 +73,12 @@ export async function createDesksService({
   return 201;
 }
 
-export async function deleteDesksService({
-  zoneId,
-  deskId,
-}: ManageDeskServiceParams): Promise<number> {
+export async function deleteDesksService({ zoneId, deskId }): Promise<number> {
   console.log("Deleting desk");
 
   let response = null;
   const csvFilePath = path.resolve("../server/src/persistence/desks.csv");
-  const headers = ["deskId", "zoneId"];
+  const headers = ["deskId", "zoneId", "zoneName"];
 
   const rows: ManageDeskServiceParams[] = [];
 
@@ -127,7 +126,7 @@ export async function deleteDesksService({
 
 export async function getDesksFromCsv(): Promise<ManageDeskServiceParams[]> {
   const csvFilePath = path.resolve("../server/src/persistence/desks.csv");
-  const headers = ["deskId", "zoneId"];
+  const headers = ["deskId", "zoneId", "zoneName"];
 
   const desks: ManageDeskServiceParams[] = [];
 
@@ -212,7 +211,7 @@ async function doesDeskAlreadyExist(
   deskId: string,
 ): Promise<boolean> {
   const csvFilePath = path.resolve("../server/src/persistence/desks.csv");
-  const headers = ["deskId", "zoneId"];
+  const headers = ["deskId", "zoneId", "zoneName"];
 
   return new Promise<boolean>((resolve, reject) => {
     const stream = fs.createReadStream(csvFilePath);

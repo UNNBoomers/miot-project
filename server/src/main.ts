@@ -11,6 +11,8 @@ import { generateApiKey } from "generate-api-key";
 import bodyParser from "body-parser";
 import { saveDataPoint } from "./services/influx.service";
 import { notifyDeskChanges } from "./services/notification.service";
+import zonesRoute from "./routes/zones.route";
+import defaultRoute from "./routes/default.route";
 
 dotenv.config();
 
@@ -27,7 +29,10 @@ app.get("/", (req: Request, res: Response) => {
 
 app.use(cors())
 app.use(bodyParser.json());
+
+app.use("/default", defaultRoute);
 app.use("/desks", deskRoutes);
+app.use("/zones", zonesRoute);
 
 const server = app.listen(port, async () => {
   console.log(`[server]: Server is running at http://localhost:${port}`);

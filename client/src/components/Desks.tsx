@@ -8,7 +8,6 @@ type DesksProps = {
 export const Desks = ({ zoneId }: DesksProps) => {
 
   const { desks, isError, isLoading } = useDesks([zoneId]);
-  console.log("DESKS", desks);
   return (
     <>
       {isLoading && <p>Načítání...</p>}

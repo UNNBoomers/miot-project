@@ -33,7 +33,6 @@ const App = () => {
   }, []);
   const [currentPage, setCurrentPage] = useState<Page>(Page.ZonePage);
   const PageMap: Partial<Record<Page, ReactElement>> = {
-    // [Page.ApiKeyPage]: <ApiKeyPage />,
     [Page.ZonePage]: <ZonePage />,
     [Page.CreateZonePage]: <CreateZonePage />,
   };

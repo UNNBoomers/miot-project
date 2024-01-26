@@ -52,8 +52,8 @@ paths:
             type: integer
             minimum: 1
           required: false
-          example: 10
-          description: Number of units defining interval from which data should be returned. If null, default value of 10 is used.
+          example: 7
+          description: Number of units defining interval from which data should be returned. If null, default value of 7 is used.
         - in: query
           name: unit
           schema:

@@ -1,6 +1,6 @@
 export const createFetcher = (apiKey: string) => (url: string) => {
   const headers = new Headers({
-    'api-key': apiKey,
+    'Api-Key': apiKey,
   });
 
   return fetch(url, { headers })

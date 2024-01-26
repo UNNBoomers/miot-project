@@ -11,7 +11,7 @@ const useDesks = (zoneIds: string[]) => {
   const {
     data:responseData,
     error,
-  } = useSWR<{data:Desk[]}>([url], createFetcher('fake-building-123.833ec0da-7ceb-4031-9fb4-f9755ebe0625'));
+  } = useSWR<{data:Desk[]}>([url], createFetcher('fake-building-123.e8299464-1e24-4b11-95aa-f7c6a4baa9be\n'));
 
   const desks = responseData ? responseData.data : [];
   return {

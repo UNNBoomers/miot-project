@@ -61,8 +61,6 @@ paths:
             enum:
               - day
               - week
-              - month
-              - year
           required: false
           example: "day"
           description: Time unit of interval from which data should be returned. If null, default value of `day` is used.

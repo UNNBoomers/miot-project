@@ -10,7 +10,7 @@ type GetRequestParams = {
   zoneId: string;
   deskIds?: string[];
   count?: number;
-  unit?: "day" | "week" | "month" | "year";
+  unit?: "day" | "week";
 };
 
 type PostRequestParams = {
@@ -33,7 +33,7 @@ export const getDesks: RequestHandler = async (req, res, next) => {
     request.deskIds = (req.query.deskIds as string).split(",");
   }
 
-  const reqApiKey = req.header("api-key") || req.header("Api-Key")
+  const reqApiKey = req.header("api-key") || req.header("Api-Key");
   if (reqApiKey !== apiKey) {
     res.status(401).json({ message: "Unauthorized" });
     return;

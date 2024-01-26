@@ -57,7 +57,7 @@ export async function getStats(
   zoneId: string,
   deskId: string,
   count: number = 10,
-  unit: "day" | "week" | "month" | "year" = "day",
+  unit: "day" | "week" = "day",
 ): Promise<DataPoint[]> {
   let fluxQuery = `from(bucket: "current")
       |> range(start: ${convertTimeRange(count, unit)})
@@ -80,7 +80,7 @@ export async function getLatestDataPoint(
   zoneId: string,
   deskId: string,
   count: number = 10,
-  unit: "day" | "week" | "month" | "year" = "day",
+  unit: "day" | "week" = "day",
 ): Promise<DataPoint[]> {
   let fluxQuery = `from(bucket: "current")
       |> range(start: ${convertTimeRange(count, unit)})
@@ -99,7 +99,7 @@ export async function getLatestActiveDataPoint(
   zoneId: string,
   deskId: string,
   count: number = 10,
-  unit: "day" | "week" | "month" | "year" = "day",
+  unit: "day" | "week" = "day",
 ): Promise<DataPoint[]> {
   let fluxQuery = `from(bucket: "current")
       |> range(start: ${convertTimeRange(count, unit)})
@@ -132,10 +132,7 @@ export async function getLatestTwoDataPoints(
   return queryInflux(fluxQuery);
 }
 
-function convertTimeRange(
-  count: number,
-  unit: "day" | "week" | "month" | "year",
-): string {
+function convertTimeRange(count: number, unit: "day" | "week"): string {
   switch (unit) {
     case "day": {
       return `-${count.toString()}d`;
@@ -143,31 +140,16 @@ function convertTimeRange(
     case "week": {
       return `-${count.toString()}w`;
     }
-    case "month": {
-      return `-${count.toString()}mo`;
-    }
-    case "year": {
-      return `-${count.toString()}y`;
-    }
   }
 }
 
-function getAggregateWindow(
-  count: number,
-  unit: "day" | "week" | "month" | "year",
-): string {
+function getAggregateWindow(count: number, unit: "day" | "week"): string {
   switch (unit) {
     case "day": {
       return `${(count + 1).toString()}d`;
     }
     case "week": {
       return `${(count + 1).toString()}w`;
-    }
-    case "month": {
-      return `${(count + 1).toString()}mo`;
-    }
-    case "year": {
-      return `${(count + 1).toString()}y`;
     }
   }
 }

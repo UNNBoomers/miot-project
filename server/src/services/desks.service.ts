@@ -13,7 +13,7 @@ type GetDesksServiceParams = {
   zoneId: string;
   deskIds?: string[];
   count?: number;
-  unit?: "day" | "week" | "month" | "year";
+  unit?: "day" | "week";
 };
 
 export type ManageDeskServiceParams = {

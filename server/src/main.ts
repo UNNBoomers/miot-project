@@ -27,7 +27,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Express + TypeScript Server");
 });
 
-app.use(cors())
+app.use(cors());
 app.use(bodyParser.json());
 
 app.use("/default", defaultRoute);

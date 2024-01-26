@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import "dotenv/config";
 import { Server } from "ws";
 import cron from "node-cron";
+import cors from "cors";
 
 import deskRoutes from "./routes/desks.route";
 import { generateApiKey } from "generate-api-key";
@@ -26,6 +27,7 @@ app.get("/", (req: Request, res: Response) => {
   res.send("Express + TypeScript Server");
 });
 
+app.use(cors())
 app.use(bodyParser.json());
 
 app.use("/default", defaultRoute);

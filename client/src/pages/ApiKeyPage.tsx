@@ -65,4 +65,4 @@ const ApiKeyPage = ({ onApiKeyChange }: ApiKeyPageProps) => {
   );
 };
 
-export default ApiKeyPage;
+export {ApiKeyPage}

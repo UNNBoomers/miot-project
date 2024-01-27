@@ -180,6 +180,10 @@ components:
           type: string
           description: Unique id of desk with the device.
           example: "c74caac5-ff7e-4019-8cea-54ad82423776"
+        name:
+          type: string
+          description: Display name of desk with the device.
+          example: "Desk Desk"
         zoneId:
           type: string
           description: Unique id of zone containing the desk.
@@ -238,6 +242,10 @@ components:
           type: string
           description: Display name of zone containing the desk.
           example: "Floor 1"
+        deskName:
+          type: string
+          description: Display name of desk with the device.
+          example: "Desk Desk"
 
   securitySchemes:
     api_key:

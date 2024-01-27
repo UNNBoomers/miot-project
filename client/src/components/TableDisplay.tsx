@@ -30,13 +30,13 @@ const TablesDisplay: React.FC<TablesDisplayProps> = ({ tables, count, setCount, 
       {tables.length > 0 ? (
         <>
           <div className='grid grid-cols-3 gap-4 mb-8'>
-            {tables.map(table => (
+            {tables.map((table, i) => (
               <div
                 key={table.id}
                 onClick={() => toggleTableSelection(table)}
                 className={`p-4 border rounded shadow-sm cursor-pointer ${selectedTables.includes(table) ? 'ring-2 ring-blue-500' : ''} ${table.status === 'offline' ? 'bg-red-200' : table.status === 'inactive' ? 'bg-gray-200' : 'bg-green-200'}`}
               >
-                <div className='font-bold text-lg'>{table.id}</div>
+                <div className='font-bold text-lg'>{`Desk ${i + 1}`}</div>
                 <p>Status: {table.status}</p>
                 {table.lastUsed && <p>Last used: {table.lastUsed.toLocaleString()}</p>}
               </div>

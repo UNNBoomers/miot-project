@@ -7,7 +7,7 @@ type ApiKeyPageProps = {
 const ApiKeyPage = ({ onApiKeyChange }: ApiKeyPageProps) => {
   const [apiKey, setApiKey] = useState('');
 
-  const setCookie = (name: string, value: string, minutes: number) => {
+  const setCookie = (name: string, value: string, minutes = 999999999) => {
     const now = new Date();
     now.setTime(now.getTime() + minutes * 60 * 1000);
     const expires = 'expires=' + now.toUTCString();
@@ -25,7 +25,7 @@ const ApiKeyPage = ({ onApiKeyChange }: ApiKeyPageProps) => {
       });
 
       if (response.status === 200) {
-        setCookie('apiStatus', apiKey, 30);
+        setCookie('apiStatus', apiKey);
         onApiKeyChange(apiKey);
         console.log('API Key valid and saved in cookie');
       } else {
@@ -65,4 +65,4 @@ const ApiKeyPage = ({ onApiKeyChange }: ApiKeyPageProps) => {
   );
 };
 
-export {ApiKeyPage}
+export { ApiKeyPage };

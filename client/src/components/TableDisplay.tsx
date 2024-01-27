@@ -4,9 +4,13 @@ import { DeskStatistics } from './DeskStatistics.tsx';
 
 type TablesDisplayProps = {
   tables: Desk[];
+  count: number;
+  unit: 'day' | 'week';
+  setCount: (count: number) => void;
+  setUnit: (unit: 'day' | 'week') => void;
 };
 
-const TablesDisplay: React.FC<TablesDisplayProps> = ({ tables }) => {
+const TablesDisplay: React.FC<TablesDisplayProps> = ({ tables, count, setCount, unit, setUnit }) => {
   const [selectedTables, setSelectedTables] = useState<Desk[]>(tables);
 
   const toggleTableSelection = (table: Desk) => {
@@ -35,7 +39,7 @@ const TablesDisplay: React.FC<TablesDisplayProps> = ({ tables }) => {
             ))}
           </div>
           {selectedTables.length > 0 && <div className='p-4 bg-white rounded-lg shadow'>
-            <DeskStatistics desks={selectedTables} />
+            <DeskStatistics desks={selectedTables} unit={unit} count={count} setUnit={setUnit} setCount={setCount} />
           </div>}
 
         </>

@@ -4,10 +4,10 @@ import { baseUrl, createFetcher } from './fetcher.ts';
 import { getCookie } from '../utils/cookie.ts';
 
 
-const useDesks = (zoneIds: string[]) => {
+const useDesks = (zoneIds: string[], count: number, unit: 'week' | 'day') => {
   const idsParam = zoneIds.join(',');
   console.log(idsParam);
-  const url = `${baseUrl}/desks?zoneId=${encodeURIComponent(idsParam)}`;
+  const url = `${baseUrl}/desks?zoneId=${encodeURIComponent(idsParam)}${count ? `&count=${count}` : ''}${unit ? `&unit=${unit}` : ''}`;
   const apiKeyInCookie = getCookie('apiStatus'); // Assuming 'apiStatus' is the name of your cookie
 
   const {

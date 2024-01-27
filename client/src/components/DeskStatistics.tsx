@@ -1,20 +1,21 @@
-import React, { useState } from 'react';
 import { Desk } from '../types';
 
 type DeskStatisticsProps = {
   desks: Desk[];
+  count: number;
+  unit: 'day' | 'week';
+  setCount: (count: number) => void;
+  setUnit: (unit: 'day' | 'week') => void;
 };
 
-const DeskStatistics: React.FC<DeskStatisticsProps> = ({ desks }) => {
-  const [periodNumber, setPeriodNumber] = useState('14'); // Default to 14
-  const [periodUnit, setPeriodUnit] = useState('days'); // Default to days
+const DeskStatistics: React.FC<DeskStatisticsProps> = ({ desks, unit, count, setUnit, setCount }) => {
 
   const handlePeriodNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setPeriodNumber(e.target.value);
+    setCount(Number(e.target.value ?? 14));
   };
 
   const handlePeriodUnitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setPeriodUnit(e.target.value);
+    setUnit((e.target.value) as 'day' | 'week');
   };
 
 
@@ -27,18 +28,18 @@ const DeskStatistics: React.FC<DeskStatisticsProps> = ({ desks }) => {
         <input
           id='periodNumber'
           type='number'
-          value={periodNumber}
+          value={count}
           onChange={handlePeriodNumberChange}
           className='py-2 px-3 border border-gray-300 rounded-md shadow-sm mr-2'
         />
         <select
           id='periodUnit'
-          value={periodUnit}
+          value={unit}
           onChange={handlePeriodUnitChange}
           className='py-2 px-3 border border-gray-300 rounded-md shadow-sm'
         >
-          <option value='days'>Days</option>
-          <option value='weeks'>Weeks</option>
+          <option value='day'>Days</option>
+          <option value='week'>Weeks</option>
         </select>
       </div>
       <table className='min-w-full table-auto border-collapse bg-white mt-4'>

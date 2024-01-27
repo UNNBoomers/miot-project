@@ -1,16 +1,18 @@
 import ZonePage from './pages/ZonePage.tsx';
-// import useWebSocket from './websockets/useWebSocket.ts';
 import { ReactElement, useEffect, useState } from 'react';
 import useWebSocket from './websockets/useWebSocket.ts';
 import { CustomNotification } from './components/Nofication.tsx';
-import { CreateZonePage } from './pages/CreateZonePage.tsx';
+import { CreateDeskPage } from './pages/CreateDeskPage.tsx';
 import { getCookie } from './utils/cookie.ts';
-import ApiKeyPage from './pages/ApiKeyPage.tsx';
+import { ApiKeyPage } from './pages/ApiKeyPage.tsx';
+import { mutate } from 'swr';
+import { baseUrl } from './api/fetcher.ts';
+import { Zone } from './types.ts';
 
 enum Page {
   ApiKeyPage,
   ZonePage,
-  CreateZonePage,
+  CreateDeskPage,
 }
 
 const requestNotificationPermission = async () => {
@@ -34,6 +36,9 @@ const App = () => {
     requestNotificationPermission();
   }, []);
 
+  const [currentZone, setCurrentZone] = useState<Zone | null>(null);
+
+
   const apiKeyInCookie = getCookie('apiStatus'); // Assuming 'apiStatus' is the name of your cookie
 
   const [currentPage, setCurrentPage] = useState<Page>(
@@ -46,10 +51,20 @@ const App = () => {
     setCurrentPage(Page.ZonePage); // Navigate to the ZonePage
   };
 
+  const refreshData = () => {
+    if (currentZone) {
+      const url = `${baseUrl}/desks?zoneId=${encodeURIComponent(currentZone.id)}`;
+      mutate(url);
+    }
+    mutate(`${baseUrl}/zones`);
+
+  };
+
+
   const PageMap: Partial<Record<Page, ReactElement>> = {
     [Page.ApiKeyPage]: <ApiKeyPage onApiKeyChange={handleApiKeyChange} />,
-    [Page.ZonePage]: <ZonePage />,
-    [Page.CreateZonePage]: <CreateZonePage />,
+    [Page.ZonePage]: <ZonePage currentZone={currentZone} setCurrentZone={setCurrentZone} />,
+    [Page.CreateDeskPage]: <CreateDeskPage apiKey={apiKey} onSuccessfulCreation={refreshData} />,
   };
   useEffect(() => {
     // React to changes in apiKey state
@@ -74,12 +89,22 @@ const App = () => {
           <h1 className='text-center'>IoT - Current</h1>
           {apiKey && currentPage === Page.ZonePage &&
             <button
-              onClick={() => handlePageChange(Page.CreateZonePage)}
+              onClick={() => handlePageChange(Page.CreateDeskPage)}
               className='bg-white text-blue-500 hover:bg-blue-100 font-bold py-2 px-4 rounded'
             >
-              Create New Zone
-            </button>}
+              Create New Desk
+            </button>
+          }
         </nav>
+
+        {currentPage === Page.CreateDeskPage && (
+          <button
+            onClick={() => handlePageChange(Page.ZonePage)}
+            className='ml-4 mt-4 bg-white text-blue-500 hover:bg-blue-100 font-bold py-2 px-4 rounded'
+          >
+            Back
+          </button>
+        )}
 
         <div className='flex justify-center px-4 py-2'>
           <div className='max-w-5xl w-full'>

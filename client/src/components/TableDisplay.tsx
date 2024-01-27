@@ -1,28 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Desk } from '../types';
+import { DeskStatistics } from './DeskStatistics.tsx';
 
 type TablesDisplayProps = {
   tables: Desk[];
 };
 
 const TablesDisplay: React.FC<TablesDisplayProps> = ({ tables }) => {
+  const [selectedTables, setSelectedTables] = useState<Desk[]>(tables);
+
+  const toggleTableSelection = (table: Desk) => {
+    if (selectedTables.includes(table)) {
+      setSelectedTables(selectedTables.filter(t => t.id !== table.id));
+    } else {
+      setSelectedTables([...selectedTables, table]);
+    }
+  };
+
   return (
-    <div>
+    <div className='bg-gray-100 p-4 rounded-lg shadow'>
       {tables.length > 0 ? (
-        <div className='grid grid-cols-3 gap-4'>
-          {tables.map(table => (
-            <div
-              key={table.id}
-              className={`p-4 border rounded ${table.status === 'offline' ? 'bg-red-200' : table.status === 'inactive' ? 'bg-grey-200' : 'bg-green-200'}`}
-            >
-              {table.id}
-              <p>Status: {table.status}</p>
-              {table.lastUsed && <p>Last used: {table.lastUsed?.toLocaleString()}</p>}
-            </div>
-          ))}
-        </div>
+        <>
+          <div className='grid grid-cols-3 gap-4 mb-8'>
+            {tables.map(table => (
+              <div
+                key={table.id}
+                onClick={() => toggleTableSelection(table)}
+                className={`p-4 border rounded shadow-sm cursor-pointer ${selectedTables.includes(table) ? 'ring-2 ring-blue-500' : ''} ${table.status === 'offline' ? 'bg-red-200' : table.status === 'inactive' ? 'bg-gray-200' : 'bg-green-200'}`}
+              >
+                <div className='font-bold text-lg'>{table.id}</div>
+                <p>Status: {table.status}</p>
+                {table.lastUsed && <p>Last used: {table.lastUsed.toLocaleString()}</p>}
+              </div>
+            ))}
+          </div>
+          {selectedTables.length > 0 && <div className='p-4 bg-white rounded-lg shadow'>
+            <DeskStatistics desks={selectedTables} />
+          </div>}
+
+        </>
       ) : (
-        <div className='text-center p-4'>
+        <div className='text-center'>
           <p>Tato zóna nemá žádné stoly</p>
         </div>
       )}

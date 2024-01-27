@@ -9,12 +9,12 @@ export const Desks = ({ zoneId }: DesksProps) => {
 
   const { desks, isError, isLoading } = useDesks([zoneId]);
   return (
-    <>
-      {isLoading && <p>Načítání...</p>}
-      {isError && <p>Došlo k chybě při načítání dat.</p>}
-      {!desks || (desks?.length) === 0 && <p>Tato zóna nemá žádné stoly</p>}
-      {desks && desks.length > 0 && <TablesDisplay tables={desks} />}
-
-    </>
+      <>
+        {!zoneId && <p className="text-center text-lg font-medium">Vyberte zónu</p>}
+        {isLoading && zoneId && <p className="text-center">Načítání...</p>}
+        {isError && zoneId && <p className="text-center text-red-500">Došlo k chybě při načítání dat.</p>}
+        {zoneId && (!desks || (desks?.length)) === 0 && <p className="text-center">Tato zóna nemá žádné stoly</p>}
+        {zoneId && desks && desks.length > 0 && <TablesDisplay tables={desks} />}
+      </>
   );
 };

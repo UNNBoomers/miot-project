@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useZones } from '../api/useZones.ts';
+import { baseUrl } from '../api/fetcher.ts';
 
 type CreateZone = {
   zoneId: string;
@@ -36,7 +37,7 @@ export const CreateDeskPage = ({ apiKey ,onSuccessfulCreation}: CreateDeskPagePr
     setMessage('');
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/desks', {
+      const response = await fetch(`${baseUrl}/desks`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

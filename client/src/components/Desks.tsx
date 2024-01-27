@@ -19,7 +19,8 @@ export const Desks = ({ zoneId }: DesksProps) => {
       {isError && zoneId && <p className='text-center text-red-500'>Došlo k chybě při načítání dat.</p>}
       {zoneId && (!desks || (desks?.length)) === 0 && <p className='text-center'>Tato zóna nemá žádné stoly</p>}
       {zoneId && desks && desks.length > 0 &&
-        <TablesDisplay tables={desks} count={count} setCount={setCount} unit={unit} setUnit={setUnit} />}
+        <TablesDisplay tables={desks} count={count} setCount={setCount} unit={unit} setUnit={setUnit}
+                       />}
     </>
   );
 };

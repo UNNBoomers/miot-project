@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Desk } from '../types';
 import { DeskStatistics } from './DeskStatistics.tsx';
 
@@ -13,6 +13,10 @@ type TablesDisplayProps = {
 const TablesDisplay: React.FC<TablesDisplayProps> = ({ tables, count, setCount, unit, setUnit }) => {
   const [selectedTables, setSelectedTables] = useState<Desk[]>(tables);
 
+  useEffect(() => {
+    // Reset selected tables when currentZone changes
+    setSelectedTables(tables);
+  }, [tables]);
   const toggleTableSelection = (table: Desk) => {
     if (selectedTables.includes(table)) {
       setSelectedTables(selectedTables.filter(t => t.id !== table.id));

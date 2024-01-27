@@ -8,4 +8,4 @@ export const createFetcher = (apiKey: string) => (url: string) => {
 };
 
 
-export const baseUrl = 'http://localhost:3000';
+export const baseUrl = 'https://miot-project-25f95abf24e9.herokuapp.com';

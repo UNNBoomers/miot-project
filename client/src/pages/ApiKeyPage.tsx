@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { baseUrl } from '../api/fetcher.ts';
 
 type ApiKeyPageProps = {
   onApiKeyChange: (newKey: string) => void;
@@ -17,7 +18,7 @@ const ApiKeyPage = ({ onApiKeyChange }: ApiKeyPageProps) => {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      const response = await fetch('http://localhost:3000/default', {
+      const response = await fetch(`${baseUrl}/default`, {
         method: 'GET',
         headers: {
           'Api-Key': apiKey,

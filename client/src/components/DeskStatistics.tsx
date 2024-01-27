@@ -1,4 +1,5 @@
 import { Desk } from '../types';
+import { FC } from 'react';
 
 type DeskStatisticsProps = {
   desks: Desk[];
@@ -8,7 +9,7 @@ type DeskStatisticsProps = {
   setUnit: (unit: 'day' | 'week') => void;
 };
 
-const DeskStatistics: React.FC<DeskStatisticsProps> = ({ desks, unit, count, setUnit, setCount }) => {
+const DeskStatistics: FC<DeskStatisticsProps> = ({ desks, unit, count, setUnit, setCount }) => {
 
   const handlePeriodNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCount(Number(e.target.value ?? 14));

@@ -60,6 +60,11 @@ const App = () => {
 
   };
 
+  useEffect(() => {
+    const interval = setInterval(refreshData, 10000);
+    return () => clearInterval(interval);
+  }, []);
+
 
   const PageMap: Partial<Record<Page, ReactElement>> = {
     [Page.ApiKeyPage]: <ApiKeyPage onApiKeyChange={handleApiKeyChange} />,

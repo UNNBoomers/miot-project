@@ -7,7 +7,8 @@ const useWebSocket = () => {
 
 
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:3000');
+    const ws = new WebSocket('wss://miot-project-25f95abf24e9.herokuapp.com');
+
 
     ws.onopen = () => {
       console.log('WebSocket connection established');

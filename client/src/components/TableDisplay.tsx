@@ -24,7 +24,10 @@ const TablesDisplay: React.FC<TablesDisplayProps> = ({ tables, count, setCount, 
       setSelectedTables([...selectedTables, table]);
     }
   };
+  const getFormattedDate = (lastUsed: Date) => {
+    return `${lastUsed.getDate()}-${lastUsed.getMonth() + 1}-${lastUsed.getFullYear()} ${lastUsed.getHours()}:${lastUsed.getMinutes()}`;
 
+  };
   return (
     <div className='bg-gray-100 p-4 rounded-lg shadow'>
       {tables.length > 0 ? (
@@ -38,7 +41,7 @@ const TablesDisplay: React.FC<TablesDisplayProps> = ({ tables, count, setCount, 
               >
                 <div className='font-bold text-lg'>{`Desk ${i + 1}`}</div>
                 <p>Status: {table.status}</p>
-                {table.lastUsed && <p>Last used: {table.lastUsed.toLocaleString()}</p>}
+                {table.lastUsed && <p>Last used: {getFormattedDate(table.lastUsed)}</p>}
               </div>
             ))}
           </div>

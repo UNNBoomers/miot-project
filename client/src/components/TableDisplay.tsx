@@ -24,7 +24,8 @@ const TablesDisplay: React.FC<TablesDisplayProps> = ({ tables, count, setCount, 
       setSelectedTables([...selectedTables, table]);
     }
   };
-  const getFormattedDate = (lastUsed: Date) => {
+  const getFormattedDate = (lastUsedDate: Date) => {
+    const lastUsed = new Date(lastUsedDate);
     return `${lastUsed.getDate()}-${lastUsed.getMonth() + 1}-${lastUsed.getFullYear()} ${lastUsed.getHours()}:${lastUsed.getMinutes()}`;
 
   };

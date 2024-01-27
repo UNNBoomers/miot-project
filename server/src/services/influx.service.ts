@@ -22,8 +22,8 @@ export async function saveDataPoint(
     await createDesksService({
       zoneId: "zone1",
       deskId: deskId,
-      zoneName: "zone-1",
-    }); // ToDo: set default values
+      zoneName: "Conference Room",
+    });
     desks = await getDesksFromCsv();
     real_desk = desks.find((i) => i.deskId === deskId);
   }

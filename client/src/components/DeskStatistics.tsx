@@ -1,5 +1,5 @@
 import { Desk } from '../types';
-import { FC } from 'react';
+import { ChangeEvent, FC, useState } from 'react';
 
 type DeskStatisticsProps = {
   desks: Desk[];
@@ -10,15 +10,24 @@ type DeskStatisticsProps = {
 };
 
 const DeskStatistics: FC<DeskStatisticsProps> = ({ desks, unit, count, setUnit, setCount }) => {
+  // New temporary state for input values
+  const [tempCount, setTempCount] = useState(count);
+  const [tempUnit, setTempUnit] = useState(unit);
 
-  const handlePeriodNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setCount(Number(e.target.value ?? 14));
+  const handleTempPeriodNumberChange = (e:ChangeEvent<any>) => {
+    setTempCount(Number(e.target.value ?? 14));
+
   };
 
-  const handlePeriodUnitChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    setUnit((e.target.value) as 'day' | 'week');
+  const handleTempPeriodUnitChange = (e:ChangeEvent<HTMLSelectElement>) => {
+    setTempUnit((e.target.value) as 'day' | 'week');
+
   };
 
+  const applyFilter = () => {
+    setCount(tempCount);
+    setUnit(tempUnit);
+  };
 
   return (
     <div>
@@ -29,19 +38,25 @@ const DeskStatistics: FC<DeskStatisticsProps> = ({ desks, unit, count, setUnit, 
         <input
           id='periodNumber'
           type='number'
-          value={count}
-          onChange={handlePeriodNumberChange}
+          value={tempCount}
+          onChange={handleTempPeriodNumberChange}
           className='py-2 px-3 border border-gray-300 rounded-md shadow-sm mr-2'
         />
         <select
           id='periodUnit'
-          value={unit}
-          onChange={handlePeriodUnitChange}
+          value={tempUnit}
+          onChange={handleTempPeriodUnitChange}
           className='py-2 px-3 border border-gray-300 rounded-md shadow-sm'
         >
           <option value='day'>Days</option>
           <option value='week'>Weeks</option>
         </select>
+        <button
+          onClick={applyFilter}
+          className='ml-2 py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700'
+        >
+          Apply
+        </button>
       </div>
       <table className='min-w-full table-auto border-collapse bg-white mt-4'>
 

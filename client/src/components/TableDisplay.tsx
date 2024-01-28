@@ -40,7 +40,7 @@ const TablesDisplay: React.FC<TablesDisplayProps> = ({ tables, count, setCount, 
                 onClick={() => toggleTableSelection(table)}
                 className={`p-4 border rounded shadow-sm cursor-pointer ${selectedTables.includes(table) ? 'ring-2 ring-blue-500' : ''} ${table.status === 'offline' ? 'bg-red-200' : table.status === 'inactive' ? 'bg-gray-200' : 'bg-green-200'}`}
               >
-                <div className='font-bold text-lg'>{`Desk ${i + 1}`}</div>
+                <div className='font-bold text-lg'>{table?.name ?? `Desk ${i + 1}`}</div>
                 <p>Status: {table.status}</p>
                 {table.lastUsed && <p>Last used: {getFormattedDate(table.lastUsed)}</p>}
               </div>

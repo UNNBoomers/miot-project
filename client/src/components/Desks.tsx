@@ -8,7 +8,7 @@ type DesksProps = {
 
 export const Desks = ({ zoneId }: DesksProps) => {
   const [unit, setUnit] = useState<'day' | 'week'>('day');
-  const [count, setCount] = useState(14);
+  const [count, setCount] = useState(4);
   const { desks, isError, isLoading } = useDesks([zoneId], count, unit);
 
 
@@ -17,10 +17,11 @@ export const Desks = ({ zoneId }: DesksProps) => {
       {!zoneId && <p className='text-center text-lg font-medium'>Vyberte zónu</p>}
       {isLoading && zoneId && <p className='text-center'>Načítání...</p>}
       {isError && zoneId && <p className='text-center text-red-500'>Došlo k chybě při načítání dat.</p>}
-      {zoneId && (!desks || (desks?.length)) === 0 && <p className='text-center'>Tato zóna nemá žádné stoly</p>}
-      {zoneId && desks && desks.length > 0 &&
+      {zoneId && (!desks || (desks?.length) && !isLoading) === 0 &&
+        <p className='text-center'>Tato zóna nemá žádné stoly</p>}
+      {zoneId && desks && desks.length > 0 && !isLoading &&
         <TablesDisplay tables={desks} count={count} setCount={setCount} unit={unit} setUnit={setUnit}
-                       />}
+        />}
     </>
   );
 };

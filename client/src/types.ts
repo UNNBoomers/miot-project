@@ -5,6 +5,7 @@ type Zone = {
 
 type Desk = {
   id: string;
+  name: string
   zoneId: string;
   status: DeskStatus;
   lastUsed: Date;

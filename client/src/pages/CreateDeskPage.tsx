@@ -5,6 +5,7 @@ import { baseUrl } from '../api/fetcher.ts';
 type CreateZone = {
   zoneId: string;
   deskId: string;
+  deskName: string;
   zoneName: string;
 };
 
@@ -13,6 +14,7 @@ const defaultZone: CreateZone = {
   zoneId: '',
   deskId: '',
   zoneName: '',
+  deskName: '',
 
 };
 
@@ -21,7 +23,7 @@ type CreateDeskPageProps = {
   onSuccessfulCreation: () => void; // Callback to update zones and desks
 
 };
-export const CreateDeskPage = ({ apiKey ,onSuccessfulCreation}: CreateDeskPageProps) => {
+export const CreateDeskPage = ({ apiKey, onSuccessfulCreation }: CreateDeskPageProps) => {
   const [zone, setZone] = useState<CreateZone>(defaultZone);
   const [message, setMessage] = useState('');
   const [messageColor, setMessageColor] = useState('');
@@ -49,7 +51,7 @@ export const CreateDeskPage = ({ apiKey ,onSuccessfulCreation}: CreateDeskPagePr
       if (response.ok) {
         displayMessage('Desk created successfully', 'text-green-600');
         setZone(defaultZone);
-        onSuccessfulCreation()
+        onSuccessfulCreation();
 
       } else {
         displayMessage('Failed to create desk', 'text-red-600');
@@ -117,6 +119,20 @@ export const CreateDeskPage = ({ apiKey ,onSuccessfulCreation}: CreateDeskPagePr
           </div>
         )}
         <div>
+          <label htmlFor='zoneName' className='block text-sm font-medium text-gray-700'>
+            Zone Name:
+          </label>
+          <input
+            id='zoneName'
+            type='text'
+            value={zone.zoneName}
+            onChange={(e) => setZone((old) => ({ ...old, zoneName: e.target.value }))}
+            className='mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500'
+          />
+        </div>
+
+
+        <div>
           <label htmlFor='deskIdInput' className='block text-sm font-medium text-gray-700'>
             Desk ID:
           </label>
@@ -130,13 +146,13 @@ export const CreateDeskPage = ({ apiKey ,onSuccessfulCreation}: CreateDeskPagePr
         </div>
         <div>
           <label htmlFor='zoneName' className='block text-sm font-medium text-gray-700'>
-            Zone Name:
+            Desk Name:
           </label>
           <input
-            id='zoneName'
+            id='deskName'
             type='text'
             value={zone.zoneName}
-            onChange={(e) => setZone((old) => ({ ...old, zoneName: e.target.value }))}
+            onChange={(e) => setZone((old) => ({ ...old, deskName: e.target.value }))}
             className='mt-1 block w-full py-2 px-3 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500'
           />
         </div>

@@ -8,7 +8,7 @@ type DesksProps = {
 
 export const Desks = ({ zoneId }: DesksProps) => {
   const [unit, setUnit] = useState<'day' | 'week'>('day');
-  const [count, setCount] = useState(14);
+  const [count, setCount] = useState(4);
   const { desks, isError, isLoading } = useDesks([zoneId], count, unit);
 
 

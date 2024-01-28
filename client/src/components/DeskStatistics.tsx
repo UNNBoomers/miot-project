@@ -15,7 +15,7 @@ const DeskStatistics: FC<DeskStatisticsProps> = ({ desks, unit, count, setUnit, 
   const [tempUnit, setTempUnit] = useState(unit);
 
   const handleTempPeriodNumberChange = (e:ChangeEvent<any>) => {
-    setTempCount(Number(e.target.value ?? 14));
+    setTempCount(Number(e.target.value ?? 4));
 
   };
 

@@ -14,12 +14,12 @@ const DeskStatistics: FC<DeskStatisticsProps> = ({ desks, unit, count, setUnit, 
   const [tempCount, setTempCount] = useState(count);
   const [tempUnit, setTempUnit] = useState(unit);
 
-  const handleTempPeriodNumberChange = (e:ChangeEvent<any>) => {
+  const handleTempPeriodNumberChange = (e: ChangeEvent<any>) => {
     setTempCount(Number(e.target.value ?? 4));
 
   };
 
-  const handleTempPeriodUnitChange = (e:ChangeEvent<HTMLSelectElement>) => {
+  const handleTempPeriodUnitChange = (e: ChangeEvent<HTMLSelectElement>) => {
     setTempUnit((e.target.value) as 'day' | 'week');
 
   };
@@ -66,6 +66,11 @@ const DeskStatistics: FC<DeskStatisticsProps> = ({ desks, unit, count, setUnit, 
             className='px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider'>ID
           </th>
           <th
+            className='px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider'
+          >
+            Name
+          </th>
+          <th
             className='px-6 py-3 border-b-2 border-gray-300 text-left text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider'>Status
           </th>
           <th
@@ -96,6 +101,11 @@ const DeskStatistics: FC<DeskStatisticsProps> = ({ desks, unit, count, setUnit, 
 
           return <tr key={desk.id} className='hover:bg-gray-50'>
             <td className='px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-700'>{desk.id}</td>
+            <td
+              className='px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-700'
+            >
+              {desk.name}
+            </td>
             <td className='px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-700'>{desk.status}</td>
             <td className='px-6 py-4 whitespace-no-wrap text-sm leading-5 text-gray-700'>{formattedDate}</td>
             <td
